@@ -1,0 +1,42 @@
+.flexRow {
+    display: flex;
+    flex-direction: row;
+}
+
+.flexColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+.item-name {
+    border: 1px solid black;
+    margin: 5px 5px 5px 0;
+    padding: 5px;
+}
+
+.item-friend,
+.advertisement {
+    border: 1px solid black;
+    margin: 5px;
+    padding: 1px;
+    width: 100%;
+}
+
+.main {
+    justify-content: center;
+}
+
+.leftCol {
+    margin: 1rem;
+    width: 70%;
+}
+
+.rightCol {
+    margin: 1rem;
+    width: 30%;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+}
