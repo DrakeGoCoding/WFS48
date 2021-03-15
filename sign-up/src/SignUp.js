@@ -159,7 +159,7 @@ export default class SignUp extends Component {
 
                     <div className="signup-redirect">
                         Have already an account ?
-                        <button id="redirect-login">Login here</button>
+                        <button id="redirect-signin">Signin here</button>
                     </div>
                 </form>
             </div>
