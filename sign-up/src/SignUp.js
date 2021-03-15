@@ -45,7 +45,7 @@ export default class SignUp extends Component {
 
     togglePasswordVisibility() {
         this.setState({
-            passwordShown: this.state.passwordShown === false ? true : false
+            passwordShown: !this.state.passwordShown ? true : false
         })
     }
 
