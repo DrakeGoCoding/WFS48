@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
 
-export default class SignIn extends Component {
+class SignIn extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,17 +18,28 @@ export default class SignIn extends Component {
         this.togglePasswordVisibility = this.togglePasswordVisibility.bind(this);
     }
 
+    redirectSignUp = () => {
+        this.props.history.push('/SignUp');
+    }
+
+    redirectMain = () => {
+        this.props.history.push('/');
+    }
+
     handleSubmit(event) {
         event.preventDefault();
-        if (!this.checkEmail())
-            this.setAlertMessage('Email does not exist');
-        else if (!this.checkPassword())
-            this.setAlertMessage('Incorrect password');
-        else {
-            this.setAlertMessage('');
-            console.log(this.state);
-            alert("Sign in successfully!");
+        let users = JSON.parse(localStorage.getItem('users'));
+        const { email, password } = this.state;
+        let found = users.find(user => user.email === email && user.password === password);
+        if (found) {
+            localStorage.setItem('currentUser', JSON.stringify({
+                name: found.name,
+                email: email,
+                password: password
+            }))
+            this.redirectMain();
         }
+        else this.setAlertMessage('Incorrect email or password.')
     }
 
     handleInputChange(event) {
@@ -45,24 +57,6 @@ export default class SignIn extends Component {
 
     /**
      * 
-     * @param {String} email 
-     */
-    checkEmail() {
-        const email = this.state.email;
-        return email.match('web48@mindx.edu.vn');
-    }
-
-    /**
-     * 
-     * @param {String} password 
-     */
-    checkPassword() {
-        const password = this.state.password;
-        return password.match('123123');
-    }
-
-    /**
-     * 
      * @param {String} message 
      */
     setAlertMessage(message) {
@@ -75,7 +69,7 @@ export default class SignIn extends Component {
         return (
             <div className="signin-container">
                 <form className="signin-form flexColumn" onSubmit={this.handleSubmit} spellCheck="false" autoComplete="off">
-                    <h1 id="signin-title">SIGN IN</h1>
+                    <h1 id="signin-title">LOG IN</h1>
 
                     <label>
                         <input
@@ -106,10 +100,12 @@ export default class SignIn extends Component {
 
                     <div className="signup-redirect">
                         Have not owned an account yet?
-                        <button id="redirect-signup">Create New Account</button>
+                        <button id="redirect-signup" onClick={this.redirectSignUp}>Create Account</button>
                     </div>
                 </form>
             </div>
         )
     }
 }
+
+export default withRouter(SignIn);

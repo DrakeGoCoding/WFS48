@@ -2,24 +2,37 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 
 class Main extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            currentUser: null
+        }
+    }
+
+    componentDidMount() {
+        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        currentUser ? this.setState({ currentUser }) : this.redirectSignIn();
+    }
+
     handleRouter = (url) => {
         this.props.history.push(url);
     }
 
     redirectSignIn = () => {
+        localStorage.removeItem('currentUser');
         this.handleRouter('/SignIn');
-    }
-
-    redirectSignUp = () => {
-        this.handleRouter('/SignUp');
     }
 
     render() {
         return (
-            <div>
-                <button onClick={this.redirectSignIn}>Sign In</button>
-                <button onClick={this.redirectSignUp}>Sign Up</button>
-            </div>
+            this.state.currentUser
+                ? <div>
+                    Hi, {this.state.currentUser.name} <br />
+                    <button onClick={this.redirectSignIn}>Log Out</button>
+                </div>
+                : <div>
+                    404
+                </div>
         )
     }
 }

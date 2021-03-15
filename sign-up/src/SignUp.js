@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
 
-export default class SignUp extends Component {
+class SignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -20,20 +22,52 @@ export default class SignUp extends Component {
         this.togglePasswordVisibility = this.togglePasswordVisibility.bind(this);
     }
 
+    redirectSignIn = () => {
+        this.props.history.push('/SignIn');
+    }
+
+    checkInput(){
+        if (!this.checkName()){
+            this.setAlertMessage('Your name should be 3-50 characters.');
+            return false;
+        }
+        if (!this.checkEmail()){
+            this.setAlertMessage('Your email should be at most 50 characters.');
+            return false;
+        }
+        if (!this.checkPassword()){
+            this.setAlertMessage('Your password should be at least 6 characters.');
+            return false;
+        }
+        if (!this.checkRepeatPassword()){
+            this.setAlertMessage('Password mismatch');
+            return false;
+        }
+        return true;
+    }
+
     handleSubmit(event) {
         event.preventDefault();
-        if (!this.checkName())
-            this.setAlertMessage('Your name should be 3-50 characters.');
-        else if (!this.checkEmail())
-            this.setAlertMessage('Your email should be at most 50 characters.');
-        else if (!this.checkPassword())
-            this.setAlertMessage('Your password should be at least 6 characters.');
-        else if (!this.checkRepeatPassword())
-            this.setAlertMessage('Password mismatch');
-        else {
-            this.setAlertMessage('');
-            console.log(this.state);
-            alert("Sign up successfully!");
+        if (this.checkInput()) {
+            let users = JSON.parse(localStorage.getItem('users'));
+            let newUser = {
+                name: this.state.name,
+                email: this.state.email,
+                password: this.state.password
+            }
+            if (users && Array.isArray(users)) {
+                let found = users.find(user => user.email === newUser.email);
+                if (found) this.setAlertMessage('This email has already been used.')
+                else {
+                    users.push(newUser);
+                    localStorage.setItem('users', JSON.stringify(users));
+                    this.redirectSignIn();
+                }
+            }
+            else {
+                localStorage.setItem('users', JSON.stringify([newUser]));
+                this.redirectSignIn();
+            }
         }
     }
 
@@ -159,10 +193,12 @@ export default class SignUp extends Component {
 
                     <div className="signup-redirect">
                         Have already an account ?
-                        <button id="redirect-signin">Signin here</button>
+                        <button id="redirect-signin" onClick={this.redirectSignIn}>Login here</button>
                     </div>
                 </form>
             </div>
         )
     }
 }
+
+export default withRouter(SignUp)
