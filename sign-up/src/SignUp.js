@@ -33,6 +33,7 @@ export default class SignUp extends Component {
         else {
             this.setAlertMessage('');
             console.log(this.state);
+            alert("Sign up successfully!");
         }
     }
 
@@ -79,6 +80,10 @@ export default class SignUp extends Component {
         return this.state.repeatPassword.localeCompare(this.state.password) === 0;
     }
 
+    /**
+     * 
+     * @param {String} message 
+     */
     setAlertMessage(message) {
         this.setState({
             alertMessage: message
