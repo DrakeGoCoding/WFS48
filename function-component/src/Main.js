@@ -62,6 +62,7 @@ export default function Main() {
         setName('');
         setAge(0);
         setColor('black');
+        setCurrentUserIndex(null);
     }
 
     return (
