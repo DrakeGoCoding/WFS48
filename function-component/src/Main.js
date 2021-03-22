@@ -13,6 +13,7 @@ export default function Main() {
 
     const changeName = (event) => setName(event.target.value);
     const addAge = () => setAge(age + 1);
+    const minusAge = () => setAge(age - 1);
     const redirectAbout = () => history.push('/about');
     const submit = () => {
         let newUser = { name, age, color };
@@ -71,6 +72,7 @@ export default function Main() {
             Age {age} <br />
             <input type="text" value={name} onChange={changeName} />
             <button onClick={addAge}>Add age</button>
+            <button onClick={minusAge}>Minus age</button>
             <button onClick={redirectAbout}>Go About</button><br />
             <button onClick={editMode ? saveUser : submit}>{editMode ? 'Save' : 'Submit'}</button>
             {editMode ? <button onClick={cancelEdit}>Cancel</button> : null}
