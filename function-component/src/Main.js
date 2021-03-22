@@ -53,10 +53,12 @@ export default function Main() {
         setCurrentUserIndex(null);
     }
 
+    // Run for the first time
     useEffect(() => {
         console.log('First hello world');
     }, []);
 
+    // Listener for state <age>
     useEffect(() => {
         console.log('Age changed');
     }, [age]);
