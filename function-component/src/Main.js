@@ -22,6 +22,36 @@ export default function Main() {
         setAge(0);
         setColor('black');
     }
+    const setRandomColor = (index) => {
+        let newList = [...listUser];
+        newList[index].color = randomColor();
+        setListUser(newList);
+    }
+    const removeUser = (index) => {
+        let newList = [...listUser];
+        newList.splice(index, 1);
+        setListUser(newList);
+    }
+    const editUser = (index) => {
+        setEditMode(true);
+        setCurrentUserIndex(index);
+        setName(listUser[index].name);
+        setAge(listUser[index].age);
+        setColor(listUser[index].color);
+    }
+    const saveUser = () => {
+        let newList = [...listUser];
+        newList[currentUserIndex] = { name, age, color };
+        setListUser(newList);
+        cancelEdit();
+    }
+    const cancelEdit = () => {
+        setEditMode(false);
+        setName('');
+        setAge(0);
+        setColor('black');
+        setCurrentUserIndex(null);
+    }
 
     useEffect(() => {
         console.log('First hello world');
@@ -30,41 +60,6 @@ export default function Main() {
     useEffect(() => {
         console.log('Age changed');
     }, [age]);
-
-    const setRandomColor = (index) => {
-        let newList = [...listUser];
-        newList[index].color = randomColor();
-        setListUser(newList);
-    }
-
-    const removeUser = (index) => {
-        let newList = [...listUser];
-        newList.splice(index, 1);
-        setListUser(newList);
-    }
-
-    const editUser = (index) => {
-        setEditMode(true);
-        setCurrentUserIndex(index);
-        setName(listUser[index].name);
-        setAge(listUser[index].age);
-        setColor(listUser[index].color);
-    }
-
-    const saveUser = () => {
-        let newList = [...listUser];
-        newList[currentUserIndex] = { name, age, color };
-        setListUser(newList);
-        cancelEdit();
-    }
-
-    const cancelEdit = () => {
-        setEditMode(false);
-        setName('');
-        setAge(0);
-        setColor('black');
-        setCurrentUserIndex(null);
-    }
 
     return (
         <div>
