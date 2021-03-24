@@ -7,7 +7,7 @@ import {
 
 import Main from './Main.js'
 
-export default function App() {
+export default function Navigation() {
     return (
         <Router>
             <Switch>
