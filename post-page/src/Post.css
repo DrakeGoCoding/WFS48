@@ -1,0 +1,17 @@
+.post-container {
+    padding: 1rem 2rem;
+    margin : 3rem auto;
+    border : 1px solid black;
+}
+
+.post-creator {}
+
+.post-content {}
+
+.post-img {
+    display: block;
+    margin-left : auto;
+    margin-right: auto;
+    width  : 80%;
+    height : auto;
+}

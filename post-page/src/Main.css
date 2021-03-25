@@ -1,0 +1,20 @@
+.main-container {
+    width : 80%;
+    margin: auto;
+}
+
+.main-header {
+    text-align: center;
+}
+
+#post-director {
+    padding      : 1rem;
+    width        : 300px;
+    margin-bottom: 3rem;
+}
+
+@media only screen and (max-width: 425px) {
+    #post-director {
+        width: 100%;
+    }
+}

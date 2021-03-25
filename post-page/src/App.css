@@ -1,0 +1,13 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.flexRow {
+    display       : flex;
+    flex-direction: row;
+}
+
+.flexColumn {
+    display       : flex;
+    flex-direction: column;
+}
