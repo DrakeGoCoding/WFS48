@@ -8,6 +8,9 @@ import Post from './Post'
 export default function Main(props) {
     let history = useHistory();
 
+    const deletePost = (index) => {
+        props.deletePost(index);
+    }
     const redirectPostCreator = () => history.push('/post-creator');
 
     return (
@@ -18,10 +21,12 @@ export default function Main(props) {
                 {props.postList.map((post, index) =>
                     <Post
                         key={index.toString()}
+                        index={index}
                         creator={post.creator}
                         imageLink={post.imageLink}
                         content={post.content}
-                        jobList={post.jobList} />
+                        jobList={post.jobList} 
+                        deletePost={deletePost}/>
                 )}
             </div>
         </div>

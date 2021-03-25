@@ -1,17 +1,29 @@
 .post-container {
-    padding: 1rem 2rem;
-    margin : 3rem auto;
-    border : 1px solid black;
+    position: relative;
+    display : flex;
+    padding : 1rem 2rem;
+    margin  : 3rem auto;
+    border  : 1px solid black;
 }
 
-.post-creator {}
-
-.post-content {}
-
 .post-img {
-    display: block;
+    display     : block;
     margin-left : auto;
     margin-right: auto;
-    width  : 80%;
-    height : auto;
+    width       : 80%;
+    height      : auto;
+}
+
+.X {
+    position : absolute;
+    right    : 2%;
+    top      : 1%;
+    font-size: 2rem;
+    cursor   : pointer;
+    transition: all 0.5s;
+}
+
+.X:hover {
+    font-size: 3rem;
+    color: #3d7ea6;
 }

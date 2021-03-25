@@ -16,11 +16,17 @@ export default function Navigation() {
         setPostList([newPost, ...postList]);
     }
 
+    const deletePost = (index) => {
+        let newPostList = [...postList];
+        newPostList.splice(index, 1);
+        setPostList(newPostList);
+    }
+
     return (
         <Router>
             <Switch>
                 <Route exact path="/">
-                    <Main postList={postList}/>
+                    <Main postList={postList} deletePost={deletePost}/>
                 </Route>
 
                 <Route path="/post-creator">
