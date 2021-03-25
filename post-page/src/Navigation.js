@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     BrowserRouter as Router,
     Switch,
@@ -9,15 +9,22 @@ import Main from './Main.js'
 import PostCreator from './PostCreator.js'
 
 export default function Navigation() {
+
+    const [postList, setPostList] = useState([]);
+
+    const addPostList = (newPost) => {
+        setPostList([newPost, ...postList]);
+    }
+
     return (
         <Router>
             <Switch>
                 <Route exact path="/">
-                    <Main />
+                    <Main postList={postList}/>
                 </Route>
 
                 <Route path="/post-creator">
-                    <PostCreator />
+                    <PostCreator addPostList={addPostList}/>
                 </Route>
             </Switch>
         </Router>

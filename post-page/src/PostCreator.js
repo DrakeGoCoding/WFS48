@@ -3,7 +3,7 @@ import { useHistory } from 'react-router'
 
 import './PostCreator.css'
 
-export default function PostCreator() {
+export default function PostCreator(props) {
     let history = useHistory();
 
     const [creator, setCreator] = useState('');
@@ -26,12 +26,7 @@ export default function PostCreator() {
     }
     const post = () => {
         const newPost = { creator, imageLink, content, jobList };
-        let postList = JSON.parse(localStorage.getItem('post-list'));
-        if (Array.isArray(postList)) {
-            postList.push(newPost)
-            localStorage.setItem('post-list', JSON.stringify(postList));
-        }
-        else localStorage.setItem('post-list', JSON.stringify([newPost]));
+        props.addPostList(newPost);
         redirectMain();
     };
     const redirectMain = () => history.push('/');
@@ -59,7 +54,7 @@ export default function PostCreator() {
                         value={imageLink}
                         placeholder='Link ảnh'
                         onChange={changeImageLink} /> <br />
-                    <img className='post-img' style={{display: imageLink !== '' ? 'block' : 'none'}} src={imageLink} alt='' />
+                    <img className='post-img' style={{ display: imageLink !== '' ? 'block' : 'none' }} src={imageLink} alt='' />
                 </label>
 
                 <label>
@@ -88,7 +83,7 @@ export default function PostCreator() {
                 </label>
 
                 <label className='post-btns'>
-                    <input id='post-btn' type='submit' value='Đăng bài'/>
+                    <input id='post-btn' type='submit' value='Đăng bài' />
                     <button id='main-director' onClick={redirectMain}>Trở về</button>
                 </label>
             </form>
