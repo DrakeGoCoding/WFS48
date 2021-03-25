@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 
 import Main from './Main.js'
+import Pokemon from './Pokemon.js'
 
 export default function Navigation() {
     return (
@@ -17,6 +18,10 @@ export default function Navigation() {
 
                 <Route path="/about">
                     <About />
+                </Route>
+
+                <Route path="/pokemon">
+                    <Pokemon />
                 </Route>
             </Switch>
         </Router>
