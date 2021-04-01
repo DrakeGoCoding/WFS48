@@ -1,5 +1,5 @@
 import axios from 'axios'
 
 export const getPokemon = (name) => {
-    return axios.get('https://10.1.9.165/' + name);
+    return axios.get('https://pokeapi.co/api/v2/pokemon/' + name);
 }
