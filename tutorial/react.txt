@@ -1,5 +1,9 @@
-npx create-react-app "project-name"
+-   Create react app:
+    npx create-react-app "project-name"
+    npm install react-router-dom
+    yarn add axios
 
-npm install react-router-dom
-
-yarn add axios
+-   Express
+    cd $folder
+    npm init
+    npm install express --save (add to dependencies list)
