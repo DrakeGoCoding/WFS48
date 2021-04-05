@@ -14,16 +14,36 @@
     height      : auto;
 }
 
-.X {
-    position : absolute;
-    right    : 2%;
-    top      : 1%;
-    font-size: 2rem;
-    cursor   : pointer;
-    transition: all 0.5s;
+.sp-btns {
+    position: absolute;
+    right   : 3%;
+    top     : 3%;
 }
 
-.X:hover {
-    font-size: 3rem;
-    color: #3d7ea6;
+.delete-btn,
+.edit-btn {
+    font-size    : 1.5rem;
+    cursor       : pointer;
+    transition   : 0.5s;
+    margin-bottom: 1rem;
+}
+
+.delete-btn:hover,
+.edit-btn:hover {
+    font-size: 2rem;
+    color    : #3d7ea6;
+}
+
+@media only screen and (max-width: 1024px) {
+    .sp-btns {
+        right: 4%;
+        top  : 4%;
+    }
+}
+
+@media only screen and (max-width: 867px) {
+    .sp-btns {
+        right: 5%;
+        top  : 5%;
+    }
 }

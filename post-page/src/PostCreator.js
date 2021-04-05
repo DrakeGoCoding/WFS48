@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
+import { addNewPost } from './Axios';
 
 import './PostCreator.css'
 
 export default function PostCreator(props) {
     let history = useHistory();
 
+    const editPost = props.editPost;
     const [creator, setCreator] = useState('');
     const [imageLink, setImageLink] = useState('');
     const [content, setContent] = useState('');
@@ -24,17 +26,28 @@ export default function PostCreator(props) {
         if (!jobList.includes(option) && option !== '') selectedOptions.push(option);
         setJobList(selectedOptions);
     }
-    const post = () => {
+    const post = e => {
+        e.preventDefault();
         const newPost = { creator, imageLink, content, jobList };
-        props.addPostList(newPost);
-        redirectMain();
+        addNewPost(newPost).then(res => {
+            redirectMain();
+        });
     };
     const redirectMain = () => history.push('/');
 
+    useEffect(() => {
+        if (editPost !== null) {
+            setCreator(editPost.creator);
+            setImageLink(editPost.imageLink);
+            setContent(editPost.content);
+            setJobList(editPost.jobList);
+        }
+    }, [editPost])
+
     return (
         <div className='postcreator-container'>
-            <form className='post-form flexColumn' onSubmit={post}>
-                <h1 className='postcreator-header'>ĐĂNG BÀI MỚI</h1>
+            <form className='post-form flexColumn' onSubmit={e => post(e)}>
+                <h1 className='postcreator-header'>{editPost ? "SỬA BÀI" : "ĐĂNG BÀI MỚI"}</h1>
                 <label>
                     <input
                         className='post-input'
@@ -69,7 +82,7 @@ export default function PostCreator(props) {
                 </label>
 
                 <label>
-                    <select className='post-job' onChange={addJob} required>
+                    <select className='post-job' onChange={addJob} required={jobList.length > 0 ? false : true}>
                         <option value=''>Chọn nghề nghiệp</option>
                         {jobOptions.map((option, index) =>
                             <option value={option} key={index.toString()}>{option}</option>
@@ -82,10 +95,10 @@ export default function PostCreator(props) {
                     </ul>
                 </label>
 
-                <label className='post-btns'>
-                    <input id='post-btn' type='submit' value='Đăng bài' />
+                <div className='post-btns'>
+                    <input id='post-btn' type="submit" value={editPost !== null ? "Lưu" : "Đăng bài"} />
                     <button id='main-director' onClick={redirectMain}>Trở về</button>
-                </label>
+                </div>
             </form>
         </div>
     )
