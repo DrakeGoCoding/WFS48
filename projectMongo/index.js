@@ -19,7 +19,7 @@ var db = mongoose.connection
 
 db.on('error', console.error.bind(console, 'MongoDB connection error: '))
 
-app.get('/', (req, res) => {
+app.get('/users', (req, res) => {
     return User.find().exec((err, books) => {
         if (err) throw err
         res.json(books)
