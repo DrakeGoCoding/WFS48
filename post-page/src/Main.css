@@ -17,6 +17,10 @@
     font-weight     : bold;
 }
 
+#post-director:hover {
+    background-color: lightgray;
+}
+
 @media only screen and (max-width: 867px) {
     .main-container {
         width: 70%;
