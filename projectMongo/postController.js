@@ -19,7 +19,7 @@ router.post('/', (req, res) => {
 })
 
 router.put('/', async (req, res) => {
-    const id = { _id: req.body._id };
+    const id = { _id: req.body.id };
     const update = req.body
 
     await Post.findByIdAndUpdate(id, update, { new: true }, (err, result) => {
