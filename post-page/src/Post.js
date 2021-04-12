@@ -22,17 +22,22 @@ export default function Post(props) {
     return (
         <div className='post-container flexColumn'>
             <div className='flexColumn sp-btns'>
-                <FontAwesomeIcon className="delete-btn fa-icons" icon={faTrash} onClick={deletePost}/>
-                <FontAwesomeIcon className="edit-btn fa-icons" icon={faEdit} onClick={editPost}/>
+                <FontAwesomeIcon className="delete-btn fa-icons" icon={faTrash} onClick={deletePost} />
+                <FontAwesomeIcon className="edit-btn fa-icons" icon={faEdit} onClick={editPost} />
             </div>
-            <p className='post-creator'>Người đăng bài: {creator}</p>
+            <p className='post-creator'>
+                <strong>Người đăng bài:</strong> {creator}
+            </p>
             <p className='post-content'>{content}</p>
             <img className='post-img' src={imageLink} alt='' />
-            <ul>
-                {jobList.map((job, index) => 
-                    <li key={index.toString()}>{job}</li>
-                )}
-            </ul>
+            <div className='post-joblist'>
+                <strong>Nghề nghiệp:</strong>
+                <ul>
+                    {jobList.map((job, index) =>
+                        <li key={index.toString()}>{job}</li>
+                    )}
+                </ul>
+            </div>
         </div>
     )
 }

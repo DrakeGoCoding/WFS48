@@ -35,8 +35,7 @@ export default function PostCreator(props) {
     };
     const edit = e => {
         e.preventDefault();
-        const id = editPost._id;
-        const newPost = { id, creator, imageLink, content, jobList };
+        const newPost = { id: editPost._id, creator, imageLink, content, jobList };
         updatePost(newPost).then(res => {
             redirectMain();
         });

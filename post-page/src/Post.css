@@ -1,28 +1,35 @@
 .post-container {
-    position: relative;
-    display : flex;
-    padding : 1rem 2rem;
-    margin  : 3rem auto;
-    border  : 1px solid black;
+    position        : relative;
+    display         : flex;
+    padding         : 1rem 2rem;
+    margin          : 3rem auto;
+    border          : 1px solid #ccc;
+    border-radius   : 5px;
+    background-color: #f5f5f5;
+}
+
+.post-content {
+    font-size: 1.25rem;
 }
 
 .post-img {
-    display     : block;
-    margin-left : auto;
-    margin-right: auto;
-    width       : 80%;
-    height      : auto;
+    display      : block;
+    margin-left  : auto;
+    margin-right : auto;
+    margin-bottom: 1rem;
+    width        : 60%;
+    height       : auto;
 }
 
 .sp-btns {
-    position: absolute;
-    right   : 3%;
-    top     : 3%;
+    position : absolute;
+    font-size: 1.25rem;
+    right    : 3%;
+    top      : 5%;
 }
 
 .delete-btn,
 .edit-btn {
-    font-size    : 1.5rem;
     cursor       : pointer;
     transition   : 0.5s;
     margin-bottom: 1rem;
@@ -30,20 +37,26 @@
 
 .delete-btn:hover,
 .edit-btn:hover {
-    font-size: 2rem;
+    font-size: 1.5rem;
     color    : #3d7ea6;
 }
 
 @media only screen and (max-width: 1024px) {
     .sp-btns {
-        right: 4%;
-        top  : 4%;
+        right    : 4%;
+        top      : 6%;
+        font-size: 1rem;
+    }
+
+    .delete-btn:hover,
+    .edit-btn:hover {
+        font-size: 1.125rem;
     }
 }
 
 @media only screen and (max-width: 867px) {
     .sp-btns {
         right: 5%;
-        top  : 5%;
+        top  : 8%;
     }
 }
