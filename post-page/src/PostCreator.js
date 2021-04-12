@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
-import { addNewPost } from './Axios';
+import { addNewPost, updatePost } from './Axios';
 
 import './PostCreator.css'
 
@@ -33,6 +33,14 @@ export default function PostCreator(props) {
             redirectMain();
         });
     };
+    const edit = e => {
+        e.preventDefault();
+        const _id = editPost._id;
+        const newPost = { _id, creator, imageLink, content, jobList };
+        updatePost(newPost).then(res => {
+            redirectMain();
+        });
+    }
     const redirectMain = () => history.push('/');
 
     useEffect(() => {
@@ -46,7 +54,7 @@ export default function PostCreator(props) {
 
     return (
         <div className='postcreator-container'>
-            <form className='post-form flexColumn' onSubmit={e => post(e)}>
+            <form className='post-form flexColumn' onSubmit={e => editPost ? edit(e) : post(e)}>
                 <h1 className='postcreator-header'>{editPost ? "SỬA BÀI" : "ĐĂNG BÀI MỚI"}</h1>
                 <label>
                     <input
