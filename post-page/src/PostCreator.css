@@ -78,6 +78,11 @@
         flex-direction: column;
     }
 
+    .post-job{
+        width: 100%;
+        font-size: 1rem;
+    }
+
     #post-btn,
     #main-director {
         width        : 100%;

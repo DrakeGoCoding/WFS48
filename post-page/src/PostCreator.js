@@ -89,7 +89,9 @@ export default function PostCreator(props) {
                 </label>
 
                 <label>
-                    <select className='post-job' onChange={addJob} required={jobList.length > 0 ? false : true}>
+                    <select className='post-job'
+                        onChange={addJob}
+                        required={jobList.length > 0 ? false : true}>
                         <option value=''>Chọn nghề nghiệp</option>
                         {jobOptions.map((option, index) =>
                             <option value={option} key={index.toString()}>{option}</option>
