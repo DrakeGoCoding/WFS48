@@ -22,6 +22,11 @@ router.put('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
+    const emailExist = await User.findOne({ email: req.body.email })
+    if (emailExist) {
+        return res.send({ error: 'Email already exists.' })
+    }
+
     let hashPassword = await bcrypt.hash(req.body.password, saltRounds);
     req.body.password = hashPassword;
     let user = new User(req.body);

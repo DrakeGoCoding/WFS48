@@ -1,204 +1,130 @@
-import React, { Component } from 'react'
-import { withRouter } from 'react-router';
-
+import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { signUp } from './Axios';
 
-class SignUp extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            name: '',
-            email: '',
-            password: '',
-            repeatPassword: '',
-            passwordShown: false,
-            termAgreement: '',
-            alertMessage: ''
-        }
+export default function SignUp(props) {
+    let history = useHistory();
 
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.togglePasswordVisibility = this.togglePasswordVisibility.bind(this);
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [repeatPassword, setRepeatPassword] = useState('');
+    const [passwordShown, setPasswordShown] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+
+    const changeName = e => setName(e.target.value)
+    const changeEmail = e => setEmail(e.target.value)
+    const changePassword = e => setPassword(e.target.value)
+    const changeRepeatPassword = e => setRepeatPassword(e.target.value)
+    const togglePasswordVisibility = () => setPasswordShown(!passwordShown ? true : false)
+
+    const redirectSignIn = () => history.push('/');
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        const newAccount = { name, email, password }
+        checkInput() && signUp(newAccount)
+            .then(res => res.data.error
+                ? setAlertMessage(res.data.error)
+                : redirectSignIn())
     }
 
-    redirectSignIn = () => {
-        this.props.history.push('/SignIn');
-    }
-
-    checkInput(){
-        if (!this.checkName()){
-            this.setAlertMessage('Your name should be 3-50 characters.');
+    const checkInput = () => {
+        if (!checkName()) {
+            setAlertMessage('Your name should be 3-50 characters.');
             return false;
         }
-        if (!this.checkEmail()){
-            this.setAlertMessage('Your email should be at most 50 characters.');
+        if (!checkEmail()) {
+            setAlertMessage('Your email should be at most 50 characters.');
             return false;
         }
-        if (!this.checkPassword()){
-            this.setAlertMessage('Your password should be at least 6 characters.');
+        if (!checkPassword()) {
+            setAlertMessage('Your password should be at least 6 characters.');
             return false;
         }
-        if (!this.checkRepeatPassword()){
-            this.setAlertMessage('Password mismatch');
+        if (!checkRepeatPassword()) {
+            setAlertMessage('Password mismatch');
             return false;
         }
         return true;
     }
 
-    handleSubmit(event) {
-        event.preventDefault();
-        if (this.checkInput()) {
-            let users = JSON.parse(localStorage.getItem('users'));
-            let newUser = {
-                name: this.state.name,
-                email: this.state.email,
-                password: this.state.password
-            }
-            if (users && Array.isArray(users)) {
-                let found = users.find(user => user.email === newUser.email);
-                if (found) this.setAlertMessage('This email has already been used.')
-                else {
-                    users.push(newUser);
-                    localStorage.setItem('users', JSON.stringify(users));
-                    this.redirectSignIn();
-                }
-            }
-            else {
-                localStorage.setItem('users', JSON.stringify([newUser]));
-                this.redirectSignIn();
-            }
-        }
-    }
+    const checkName = () => name.length >= 3 && name.length <= 50
+    const checkEmail = () => email.length <= 50
+    const checkPassword = () => password.length >= 6
+    const checkRepeatPassword = () => repeatPassword.localeCompare(password) === 0
 
-    handleInputChange(event) {
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-        this.setState({ [name]: value })
-    }
+    return (
+        <div className="signup-container">
+            <form className="signup-form flexColumn" onSubmit={handleSubmit} spellCheck="false" autoComplete="off">
+                <h1 id="signup-title">CREATE ACCOUNT</h1>
+                <label>
+                    <input
+                        className="signup-input"
+                        name="name"
+                        type="text"
+                        value={name}
+                        placeholder="Your Name"
+                        onChange={changeName}
+                        required />
+                </label>
 
-    togglePasswordVisibility() {
-        this.setState({
-            passwordShown: !this.state.passwordShown ? true : false
-        })
-    }
+                <label>
+                    <input
+                        className="signup-input"
+                        name="email"
+                        type="email"
+                        value={email}
+                        placeholder="Your Email"
+                        onChange={changeEmail}
+                        required />
+                </label>
 
-    /**
-     * 
-     * @param {String} name 
-     */
-    checkName() {
-        const name = this.state.name;
-        return name.length >= 3 && name.length <= 50;
-    }
+                <label className="signup-password">
+                    <input
+                        className="signup-input"
+                        name="password"
+                        type={passwordShown ? 'text' : 'password'}
+                        value={password}
+                        placeholder="Password"
+                        onChange={changePassword}
+                        required />
+                    <FontAwesomeIcon className="fa-icons" icon={faEye} onClick={togglePasswordVisibility} />
+                </label>
 
-    /**
-     * 
-     * @param {String} email 
-     */
-    checkEmail() {
-        const email = this.state.email;
-        return email.length <= 50;
-    }
+                <label className="signup-password">
+                    <input
+                        className="signup-input"
+                        name="repeatPassword"
+                        type={passwordShown ? 'text' : 'password'}
+                        value={repeatPassword}
+                        placeholder="Repeat your password"
+                        onChange={changeRepeatPassword}
+                        required />
+                    <FontAwesomeIcon className="fa-icons" icon={faEye} onClick={togglePasswordVisibility} />
+                </label>
 
-    /**
-     * 
-     * @param {String} password 
-     */
-    checkPassword() {
-        return this.state.password.length >= 6;
-    }
-
-    checkRepeatPassword() {
-        return this.state.repeatPassword.localeCompare(this.state.password) === 0;
-    }
-
-    /**
-     * 
-     * @param {String} message 
-     */
-    setAlertMessage(message) {
-        this.setState({
-            alertMessage: message
-        })
-    }
-
-    render() {
-        return (
-            <div className="signup-container">
-                <form className="signup-form flexColumn" onSubmit={this.handleSubmit} spellCheck="false" autoComplete="off">
-                    <h1 id="signup-title">CREATE ACCOUNT</h1>
-                    <label>
-                        <input
-                            className="signup-input"
-                            name="name"
-                            type="text"
-                            value={this.state.name}
-                            placeholder="Your Name"
-                            onChange={this.handleInputChange}
-                            required />
-                    </label>
-
-                    <label>
-                        <input
-                            className="signup-input"
-                            name="email"
-                            type="email"
-                            value={this.state.email}
-                            placeholder="Your Email"
-                            onChange={this.handleInputChange}
-                            required />
-                    </label>
-
-                    <label className="signup-password">
-                        <input
-                            className="signup-input"
-                            name="password"
-                            type={this.state.passwordShown ? 'text' : 'password'}
-                            value={this.state.password}
-                            placeholder="Password"
-                            onChange={this.handleInputChange}
-                            required />
-                        <FontAwesomeIcon className="fa-icons" icon={faEye} onClick={this.togglePasswordVisibility} />
-                    </label>
-
-                    <label className="signup-password">
-                        <input
-                            className="signup-input"
-                            name="repeatPassword"
-                            type={this.state.passwordShown ? 'text' : 'password'}
-                            value={this.state.repeatPassword}
-                            placeholder="Repeat your password"
-                            onChange={this.handleInputChange}
-                            required />
-                        <FontAwesomeIcon className="fa-icons" icon={faEye} onClick={this.togglePasswordVisibility} />
-                    </label>
-
-                    <label>
-                        <input
-                            className="signup-agreement"
-                            name="termAgreement"
-                            type="checkbox"
-                            value={this.state.termAgreement}
-                            onChange={this.handleInputChange}
-                            required />
+                <label>
+                    <input
+                        className="signup-agreement"
+                        name="termAgreement"
+                        type="checkbox"
+                        required />
                         &nbsp; I agree all statements in &nbsp;
                         <a href="https://reactjs.org/" target="_blank" rel="noreferrer">Terms of service</a>
-                    </label>
+                </label>
 
-                    <div className="signup-alert">{this.state.alertMessage}</div>
+                <div className="signup-alert">{alertMessage}</div>
 
-                    <input className="signup-submit" type="submit" value="SIGN UP" />
+                <input className="signup-submit" type="submit" value="SIGN UP" />
 
-                    <div className="signup-redirect">
-                        Have already an account ?
-                        <button id="redirect-signin" onClick={this.redirectSignIn}>Login here</button>
-                    </div>
-                </form>
-            </div>
-        )
-    }
+                <div className="signup-redirect">
+                    Have already an account ?
+                    <button id="redirect-signin" onClick={redirectSignIn}>Login here</button>
+                </div>
+            </form>
+        </div>
+    )
 }
-
-export default withRouter(SignUp)

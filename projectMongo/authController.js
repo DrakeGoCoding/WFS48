@@ -5,12 +5,10 @@ const bcrypt = require('bcrypt')
 const User = require('./model/user')
 
 
-router.post('/login', async (req, res) => {
+router.post('/signin', async (req, res) => {
     let checkPass = false;
     const { email, password } = req.body
-    const user = await User.findOne({
-        email: email
-    })
+    const user = await User.findOne({ email: email })
 
     if (user) {
         checkPass = bcrypt.compareSync(password, user.password)
@@ -21,10 +19,10 @@ router.post('/login', async (req, res) => {
             email: user.email,
             _id: user._id
         }, process.env.SECRET_KEY)
-        return res.json(accessToken)
+        return res.json({ accessToken })
     } else {
         res.send({
-            error: 'Username or password is incorrect'
+            error: 'Incorrect email or password.'
         })
     }
 })
