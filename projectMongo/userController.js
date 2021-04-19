@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const User = require('./model/user')
+const bcrypt = require('bcrypt')
+const saltRounds = 10;
 
 router.get('/', (req, res) => {
     return User.find().exec((err, books) => {
@@ -19,8 +21,11 @@ router.put('/', async (req, res) => {
     })
 })
 
-router.post('/', (req, res) => {
-    let user = new User(req.body)
+router.post('/', async (req, res) => {
+    let hashPassword = await bcrypt.hash(req.body.password, saltRounds);
+    req.body.password = hashPassword;
+    let user = new User(req.body);
+
     user.save(err => {
         if (err) throw err
         console.log('User save successfully')
