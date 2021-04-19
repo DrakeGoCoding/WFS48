@@ -1,0 +1,27 @@
+.main img {
+    width: 300px;
+    height: 300px;
+}
+
+.main .flexRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.school table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.school td,
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.school tr:nth-child(even) {
+    background-color: #dddddd;
+}
