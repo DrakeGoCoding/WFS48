@@ -19,6 +19,10 @@ input[type="button"] {
     font-weight  : bold;
 }
 
+input[type=checkbox] {
+    transform: scale(1.5);
+}
+
 input[type="text"],
 select,
 textarea {
@@ -31,12 +35,12 @@ input[type="button"]:hover {
     background-color: lightgray;
 }
 
-.flexRow {
-    display       : flex;
-    flex-direction: row;
-}
-
 .flexColumn {
     display       : flex;
     flex-direction: column;
+}
+
+.flexRow {
+    display       : flex;
+    flex-direction: row;
 }

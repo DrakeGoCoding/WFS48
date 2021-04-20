@@ -1,0 +1,133 @@
+.signin-container {
+    width            : 100vw;
+    height           : 100vh;
+    display          : flex;
+    justify-content  : center;
+    align-items      : center;
+    background       : url('https://picsum.photos/id/16/1920/1080');
+    background-repeat: no-repeat;
+    background-size  : cover;
+}
+
+
+.signin-form {
+    padding         : 1.5rem 0;
+    width           : 40%;
+    height          : fit-content;
+    align-items     : center;
+    background-color: white;
+    border-radius   : 1rem;
+}
+
+
+.signin-form>label {
+    width: 80%;
+}
+
+
+#signin-title {
+    text-align: center;
+}
+
+
+.signin-input {
+    width        : 100%;
+    height       : 3rem;
+    font-size    : 1.2rem;
+    padding      : 2rem 1.5rem;
+    margin       : 1rem 0;
+    border       : 1px solid #dddfe2;
+    border-radius: 5px;
+    box-sizing   : border-box;
+}
+
+
+.signin-input::placeholder {
+    color: #dddfe2;
+}
+
+
+.signin-input:focus {
+    border : 1px solid #3d7ea6;
+    outline: none;
+}
+
+
+.signin-password {
+    position: relative;
+    display : flex;
+}
+
+.signin-password .fa-icons {
+    position: absolute;
+    top     : 40%;
+    right   : 5%;
+    color   : #dddfe2;
+}
+
+.signin-password .fa-icons:hover {
+    color : #565656;
+    cursor: pointer;
+}
+
+.signin-submit {
+    width         : 80%;
+    font-size     : 1.2rem;
+    font-weight   : bold;
+    color         : white;
+    padding       : 1rem 0;
+    margin        : 2rem 0;
+    border        : none;
+    border-radius : 5px;
+    letter-spacing: 2px;
+    background    : linear-gradient(90deg, rgba(70, 127, 199, 1) 0%, rgba(76, 174, 212, 1) 35%, rgba(0, 212, 255, 1) 100%);
+    cursor        : pointer;
+    outline       : none;
+}
+
+.signin-submit,
+#redirect-signup:hover {
+    opacity: 0.8;
+}
+
+.signin-redirect {
+    width     : 80%;
+    text-align: center;
+    margin    : 2rem 0;
+    font-size : 1.1rem;
+}
+
+.signin-alert {
+    width        : 80%;
+    color        : #ea555e;
+    padding-top  : 1rem;
+    border-radius: 5px;
+}
+
+#redirect-signup {
+    border          : none;
+    background-color: white;
+    font-weight     : bold;
+    text-decoration : underline;
+    font-size       : 1.1rem;
+}
+
+@media only screen and (max-width: 1440px) {
+    .signin-form {
+        width: 50%;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .signin-form {
+        width: 70%
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .signin-form {
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+    }
+}

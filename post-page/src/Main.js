@@ -31,6 +31,10 @@ export default function Main(props) {
         history.push('/post-creator');
     }
 
+    const redirectSignIn = () => {
+        localStorage.removeItem('accessToken');
+        props.setToken('');
+    }
     const redirectPostCreator = () => history.push('/post-creator');
 
     useEffect(() => {
@@ -41,7 +45,8 @@ export default function Main(props) {
     return (
         <div className='main-container'>
             <h1 className='main-header'>DANH SÁCH BÀI ĐĂNG</h1>
-            <button id='post-director' onClick={() => redirectPostCreator()}>Đăng bài</button>
+            <button id='post-director' onClick={redirectPostCreator}>Đăng bài</button>
+            <button id='logout-btn' onClick={redirectSignIn}>Log Out</button>
             <div>
                 {postList.map((post, index) =>
                     <Post

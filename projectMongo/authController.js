@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const User = require('./model/user')
 
-
 router.post('/signin', async (req, res) => {
     let checkPass = false;
     const { email, password } = req.body
@@ -20,11 +19,11 @@ router.post('/signin', async (req, res) => {
             _id: user._id
         }, process.env.SECRET_KEY)
         return res.json({ accessToken })
-    } else {
-        res.send({
-            error: 'Incorrect email or password.'
-        })
     }
+    
+    res.send({
+        error: 'Incorrect email or password.'
+    })
 })
 
 module.exports = router
