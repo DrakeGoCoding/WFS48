@@ -7,6 +7,12 @@
     text-align: center;
 }
 
+.main-btns {
+    display        : flex;
+    flex-direction : row;
+    justify-content: space-between;
+}
+
 #post-director,
 #logout-btn {
     padding         : 1rem;
@@ -26,6 +32,10 @@
 @media only screen and (max-width: 867px) {
     .main-container {
         width: 70%;
+    }
+
+    .main-btns {
+        flex-direction: column;
     }
 
     #post-director,

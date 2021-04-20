@@ -45,8 +45,10 @@ export default function Main(props) {
     return (
         <div className='main-container'>
             <h1 className='main-header'>DANH SÁCH BÀI ĐĂNG</h1>
-            <button id='post-director' onClick={redirectPostCreator}>Đăng bài</button>
-            <button id='logout-btn' onClick={redirectSignIn}>Log Out</button>
+            <div className="main-btns">
+                <button id='post-director' onClick={redirectPostCreator}>Đăng bài</button>
+                <button id='logout-btn' onClick={redirectSignIn}>Log Out</button>
+            </div>
             <div>
                 {postList.map((post, index) =>
                     <Post
