@@ -60,8 +60,9 @@
 
 #post-btn,
 #main-director {
-    padding: 1rem;
-    width  : 300px;
+    padding   : 1rem;
+    width     : 300px;
+    transition: all 0.4s ease-in-out;
 }
 
 @media only screen and (max-width: 1024px) {
@@ -78,8 +79,8 @@
         flex-direction: column;
     }
 
-    .post-job{
-        width: 100%;
+    .post-job {
+        width    : 100%;
         font-size: 1rem;
     }
 

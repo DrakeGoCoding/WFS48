@@ -14,6 +14,8 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+const middleware = require('./helper/authenMiddleware')
+
 const SchoolRouter = require('./schoolController')
 const ClassRouter = require('./classController')
 const StudentRouter = require('./studentController')
@@ -33,12 +35,12 @@ mongoose.Promise = global.Promise;
 
 var db = mongoose.connection
 
-app.use('/school', SchoolRouter)
-app.use('/class', ClassRouter)
-app.use('/student', StudentRouter)
+app.use('/school', middleware.authenticateJWT, SchoolRouter)
+app.use('/class', middleware.authenticateJWT, ClassRouter)
+app.use('/student', middleware.authenticateJWT, StudentRouter)
 
-app.use('/post', PostRouter)
-app.use('/user', UserRouter)
+app.use('/post', middleware.authenticateJWT, PostRouter)
+app.use('/user', middleware.authenticateJWT, UserRouter)
 app.use('/', AuthRouter);
 
 db.on('error', console.error.bind(console, 'MongoDB connection error: '))

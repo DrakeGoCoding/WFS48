@@ -18,20 +18,17 @@ export default function SignIn(props) {
     const changePassword = e => setPassword(e.target.value)
     const togglePasswordVisibility = () => setPasswordShown(!passwordShown ? true : false)
 
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const account = { email, password }
-        signIn(account).then(res => {
-            if (res.data.error) {
-                setAlertMessage(res.data.error)
-            } else {
-                props.setToken(res.data.accessToken)
-                redirectMain()
-            }
-        })
+        try {
+            const account = { email, password }
+            const res = await signIn(account)
+            props.setToken(res.data.accessToken)
+        } catch (error) {
+            setAlertMessage(error.response.data.error)
+        }
     }
 
-    const redirectMain = () => history.push('/')
     const redirectSignUp = () => history.push('/SignUp')
 
     return (
