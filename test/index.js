@@ -11,3 +11,6 @@ add(3, 8).then(
     result => console.log(result),
     error => console.log(error)
 );
+
+let string = ''
+console.log(!string);

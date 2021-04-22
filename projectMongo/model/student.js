@@ -4,11 +4,11 @@ var studentSchema = mongoose.Schema({
     name: String,
     address: String,
     school: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'School'
     },
     class: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Class'
     },
     created: {

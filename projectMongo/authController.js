@@ -21,7 +21,7 @@ router.post('/signin', async (req, res) => {
         return res.json({ accessToken })
     }
     
-    res.send({
+    res.status(400).send({
         error: 'Incorrect email or password.'
     })
 })
