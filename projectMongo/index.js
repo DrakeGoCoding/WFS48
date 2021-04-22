@@ -3,7 +3,7 @@ const app = express()
 const PORT = 8789
 const dotenv = require('dotenv')
 const result = dotenv.config()
-if (result.error){
+if (result.error) {
     throw result.error
 }
 
@@ -14,8 +14,13 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+const SchoolRouter = require('./schoolController')
+const ClassRouter = require('./classController')
+const StudentRouter = require('./studentController')
+
 const PostRouter = require('./postController')
 const UserRouter = require('./userController')
+
 const AuthRouter = require('./authController')
 
 var mongoDB = 'mongodb://localhost:27017/projectMongo'
@@ -27,6 +32,10 @@ mongoose.connect(mongoDB, err => {
 mongoose.Promise = global.Promise;
 
 var db = mongoose.connection
+
+app.use('/school', SchoolRouter)
+app.use('/class', ClassRouter)
+app.use('/student', StudentRouter)
 
 app.use('/post', PostRouter)
 app.use('/user', UserRouter)
