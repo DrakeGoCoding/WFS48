@@ -9,6 +9,18 @@ router.get('/', (req, res) => {
     })
 })
 
+router.get('/:id', (req, res) => {
+    if (!req.params.id)
+        return res.status(400).send({ error: 'request id for student' })
+
+    const id = { _id: req.params.id }
+
+    return Post.findById(id).exec((err, post) => {
+        if (err) throw err;
+        res.json(post)
+    })
+})
+
 router.post('/', (req, res) => {
     let post = new Post(req.body)
     post.save(err => {

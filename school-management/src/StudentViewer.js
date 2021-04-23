@@ -16,7 +16,7 @@ export default function StudentViewer() {
         return (
             <tr key={index}>
                 <td>{index + 1}</td>
-                <td><Link to={location.pathname + '/edit/' + item.name}>{item.name}</Link></td>
+                <td><Link to={location.pathname + '/edit/' + item._id}>{item.name}</Link></td>
                 <td>{item.address}</td>
                 <td>{item.school ? item.school.name : 'N/A'}</td>
                 <td>{item.class ? item.class.name : 'N/A'}</td>

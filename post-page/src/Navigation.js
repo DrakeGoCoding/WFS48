@@ -10,40 +10,37 @@ import SignUp from './SignUp'
 import PostCreator from './PostCreator.js'
 
 export default function Navigation() {
-    const [editPost, setEditPost] = useState(null);
     const [token, setToken] = useState('');
+    const [userName, setUserName] = useState('');
 
-    const loginSuccess = (token) => {
+    const loginSuccess = (token, userName) => {
         setToken(token);
+        setUserName(userName);
+        localStorage.setItem('currentUser', userName)
         localStorage.setItem('accessToken', token)
     }
 
     useEffect(() => {
         let token = localStorage.getItem('accessToken')
+        let currentUser = localStorage.getItem('currentUser')
         setToken(token)
+        setUserName(currentUser)
     }, [])
 
     return (
         <Router>
             {
                 !token
-                    ? <>
-                        <Route exact path="/">
-                            <SignIn setToken={loginSuccess}></SignIn>
-                        </Route>
-                        <Route path="/SignUp">
-                            <SignUp></SignUp>
-                        </Route>
-                    </>
+                    ? <SignIn setToken={loginSuccess}></SignIn>
                     : <>
                         <Route exact path="/">
-                            <Main setToken={setToken} setEditPost={setEditPost}></Main>
+                            <Main setToken={setToken} userName={userName} />
                         </Route>
-                        <Route path="/post-creator">
-                            <PostCreator editPost={editPost} />
-                        </Route>
+                        <Route path="/post-creator" component={PostCreator} />
+                        <Route path="/post-editor/:id" component={PostCreator} />
                     </>
             }
+            <Route path="/SignUp" component={SignUp} />
         </Router>
     )
 }

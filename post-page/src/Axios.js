@@ -23,12 +23,16 @@ export const getAllPosts = () => {
     return instance.get('/post');
 }
 
+export const getPostByID = (id) => {
+    return instance.get('/post/' + id)
+}
+
 export const updatePost = (body) => {
     return instance.put('/post', body)
 }
 
 export const deletePostByID = (id) => {
-    return instance.delete('/post' + id);
+    return instance.delete('/post/' + id);
 }
 
 export const addNewPost = (body) => {

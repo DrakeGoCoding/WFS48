@@ -8,15 +8,16 @@ import Post from './Post'
 
 export default function Main(props) {
     let history = useHistory();
-
+    const userName = props.userName;
     const [postList, setPostList] = useState([]);
 
-    const fetchPosts = () => {
-        getAllPosts().then(res => {
-            setPostList(res.data);
-        }).catch(error => {
-            setPostList([]);
-        })
+    const fetchPosts = async () => {
+        try {
+            const postList = await getAllPosts();
+            setPostList(postList.data)
+        } catch (error) {
+            setPostList([])
+        }
     }
 
     const deletePost = (index) => {
@@ -27,24 +28,24 @@ export default function Main(props) {
     }
 
     const editPost = (index) => {
-        props.setEditPost(postList[index]);
-        history.push('/post-creator');
+        history.push(`/post-editor/${postList[index]._id}`);
     }
 
     const redirectSignIn = () => {
         localStorage.removeItem('accessToken');
-        props.setToken('');
+        localStorage.removeItem('currentUser');
+        props.setToken('')
     }
     const redirectPostCreator = () => history.push('/post-creator');
 
     useEffect(() => {
-        props.setEditPost(null);
         fetchPosts();
     }, [props]);
 
     return (
         <div className='main-container'>
             <h1 className='main-header'>DANH SÁCH BÀI ĐĂNG</h1>
+            <h3>Hi, {userName}</h3>
             <div className="main-btns">
                 <button id='post-director' onClick={redirectPostCreator}>Đăng bài</button>
                 <button id='logout-btn' onClick={redirectSignIn}>Log Out</button>

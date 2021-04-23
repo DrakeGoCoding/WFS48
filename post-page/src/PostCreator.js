@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router'
-import { addNewPost, updatePost } from './Axios';
+import { useHistory, useParams } from 'react-router'
+import { addNewPost, getPostByID, updatePost } from './Axios';
 
 import './PostCreator.css'
 
 export default function PostCreator(props) {
     let history = useHistory();
+    const param = useParams();
 
-    const editPost = props.editPost;
+    const id = param.id;
     const [creator, setCreator] = useState('');
     const [imageLink, setImageLink] = useState('');
     const [content, setContent] = useState('');
@@ -35,7 +36,7 @@ export default function PostCreator(props) {
     };
     const edit = e => {
         e.preventDefault();
-        const newPost = { id: editPost._id, creator, imageLink, content, jobList };
+        const newPost = { id, creator, imageLink, content, jobList };
         updatePost(newPost).then(res => {
             redirectMain();
         });
@@ -43,18 +44,21 @@ export default function PostCreator(props) {
     const redirectMain = () => history.push('/');
 
     useEffect(() => {
-        if (editPost !== null) {
-            setCreator(editPost.creator);
-            setImageLink(editPost.imageLink);
-            setContent(editPost.content);
-            setJobList(editPost.jobList);
+        if (id) {
+            getPostByID(id).then(res => {
+                const post = res.data;
+                setCreator(post.creator);
+                setImageLink(post.imageLink);
+                setContent(post.content);
+                setJobList(post.jobList);
+            })
         }
-    }, [editPost])
+    })
 
     return (
         <div className='postcreator-container'>
-            <form className='post-form flexColumn' onSubmit={e => editPost ? edit(e) : post(e)}>
-                <h1 className='postcreator-header'>{editPost ? "SỬA BÀI" : "ĐĂNG BÀI MỚI"}</h1>
+            <form className='post-form flexColumn' onSubmit={e => id ? edit(e) : post(e)}>
+                <h1 className='postcreator-header'>{id ? "SỬA BÀI" : "ĐĂNG BÀI MỚI"}</h1>
                 <label>
                     <input
                         className='post-input'
@@ -105,7 +109,7 @@ export default function PostCreator(props) {
                 </label>
 
                 <div className='post-btns'>
-                    <input id='post-btn' type="submit" value={editPost !== null ? "Lưu" : "Đăng bài"} />
+                    <input id='post-btn' type="submit" value={id ? "Lưu" : "Đăng bài"} />
                     <button id='main-director' onClick={redirectMain}>Trở về</button>
                 </div>
             </form>

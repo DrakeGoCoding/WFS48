@@ -18,9 +18,9 @@ router.post('/signin', async (req, res) => {
             email: user.email,
             _id: user._id
         }, process.env.SECRET_KEY)
-        return res.json({ accessToken })
+        return res.json({ name: user.name, accessToken })
     }
-    
+
     res.status(400).send({
         error: 'Incorrect email or password.'
     })

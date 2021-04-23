@@ -23,7 +23,7 @@ export default function SignIn(props) {
         try {
             const account = { email, password }
             const res = await signIn(account)
-            props.setToken(res.data.accessToken)
+            props.setToken(res.data.accessToken, res.data.name)
         } catch (error) {
             setAlertMessage(error.response.data.error)
         }
