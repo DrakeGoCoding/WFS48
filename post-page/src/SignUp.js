@@ -28,9 +28,8 @@ export default function SignUp(props) {
         e.preventDefault();
         const newAccount = { name, email, password }
         checkInput() && signUp(newAccount)
-            .then(res => res.data.error
-                ? setAlertMessage(res.data.error)
-                : redirectSignIn())
+            .then(res => redirectSignIn())
+            .catch(error => setAlertMessage("Something happens!"))
     }
 
     const checkInput = () => {

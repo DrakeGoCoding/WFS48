@@ -19,6 +19,10 @@ export const signUp = (body) => {
     return instance.post('/user', body)
 }
 
+export const getUserByID = (id) => {
+    return instance.get('/user/' + id)
+}
+
 export const getAllPosts = () => {
     return instance.get('/post');
 }

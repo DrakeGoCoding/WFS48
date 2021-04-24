@@ -18,7 +18,7 @@ router.post('/signin', async (req, res) => {
             email: user.email,
             _id: user._id
         }, process.env.SECRET_KEY)
-        return res.json({ name: user.name, accessToken })
+        return res.json({ accessToken })
     }
 
     res.status(400).send({

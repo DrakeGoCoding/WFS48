@@ -3,19 +3,19 @@ const router = express.Router()
 const Post = require('./model/post')
 
 router.get('/', (req, res) => {
-    return Post.find().exec((err, books) => {
+    return Post.find().populate('creator').exec((err, posts) => {
         if (err) throw err
-        res.json(books)
+        res.json(posts)
     })
 })
 
 router.get('/:id', (req, res) => {
     if (!req.params.id)
-        return res.status(400).send({ error: 'request id for student' })
+        return res.status(400).send({ error: 'request post id' })
 
     const id = { _id: req.params.id }
 
-    return Post.findById(id).exec((err, post) => {
+    return Post.findById(id).populate('creator').exec((err, post) => {
         if (err) throw err;
         res.json(post)
     })
@@ -41,8 +41,11 @@ router.put('/', async (req, res) => {
 })
 
 router.delete('/:id', (req, res) => {
+    if (!req.params.id)
+        return res.status(400).send({ error: 'request post id' })
+
     const id = { _id: req.params.id }
-    Post.findByIdAndDelete(id, (err, docs) => {
+    Post.findByIdAndDelete(id, (err, doc) => {
         if (err) console.log(err);
         else res.json({ message: `Delete post ${req.params.id} successfully` });
     })

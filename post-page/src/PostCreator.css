@@ -52,6 +52,20 @@
     box-sizing   : border-box;
 }
 
+.post-joblist{
+    padding: 0;
+}
+
+.post-chosen-job{
+    align-items: center;
+    margin-bottom: 0.5rem
+}
+
+.delete-job-btn{
+    font-size: 1rem;
+    margin-right: 1rem;
+}
+
 .post-btns {
     display        : flex;
     justify-content: space-between;

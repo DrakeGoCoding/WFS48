@@ -1,7 +1,10 @@
 var mongoose = require('mongoose')
 
 var postSchema = mongoose.Schema({
-    creator: String,
+    creator: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     content: String,
     imageLink: String,
     jobList: Array

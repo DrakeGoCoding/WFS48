@@ -5,9 +5,21 @@ const bcrypt = require('bcrypt')
 const saltRounds = 10;
 
 router.get('/', (req, res) => {
-    return User.find().exec((err, books) => {
+    return User.find().exec((err, users) => {
         if (err) throw err
-        res.json(books)
+        res.json(users)
+    })
+})
+
+router.get('/:id', (req, res) => {
+    if (!req.params.id)
+        return res.status(400).send({ error: 'request user id' })
+
+    const id = { _id: req.params.id }
+
+    return User.findById(id).exec((err, user) => {
+        if (err) throw err;
+        res.json(user)
     })
 })
 

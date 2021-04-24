@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router'
 import { addNewPost, getPostByID, updatePost } from './Axios';
+import jwt_decode from 'jwt-decode'
 
 import './PostCreator.css'
 
-export default function PostCreator(props) {
+export default function PostCreator() {
     let history = useHistory();
     const param = useParams();
 
-    const id = param.id;
-    const [creator, setCreator] = useState('');
+    const postID = param.id;
+    const creatorID = jwt_decode(localStorage.getItem('accessToken'))._id;
+
     const [imageLink, setImageLink] = useState('');
     const [content, setContent] = useState('');
     const [jobList, setJobList] = useState([]);
@@ -18,7 +20,6 @@ export default function PostCreator(props) {
         'Bác sỹ', 'Kỹ sư', 'Giảng viên', 'Diễn viên', 'Ca sỹ',
         'Người Mẫu', 'Đầu bếp', 'Nhiếp ảnh gia', 'Phóng viên', 'Chính trị gia'];
 
-    const changeCreator = e => setCreator(e.target.value);
     const changeImageLink = e => setImageLink(e.target.value);
     const changeContent = e => setContent(e.target.value);
     const addJob = e => {
@@ -27,16 +28,21 @@ export default function PostCreator(props) {
         if (!jobList.includes(option) && option !== '') selectedOptions.push(option);
         setJobList(selectedOptions);
     }
+    const deleteJob = (index) => {
+        let currentJobList = [...jobList];
+        currentJobList.splice(index, 1)
+        setJobList(currentJobList)
+    }
     const post = e => {
         e.preventDefault();
-        const newPost = { creator, imageLink, content, jobList };
+        const newPost = { creator: creatorID, imageLink, content, jobList };
         addNewPost(newPost).then(res => {
             redirectMain();
         });
     };
     const edit = e => {
         e.preventDefault();
-        const newPost = { id, creator, imageLink, content, jobList };
+        const newPost = { id: postID, creator: creatorID, imageLink, content, jobList };
         updatePost(newPost).then(res => {
             redirectMain();
         });
@@ -44,31 +50,20 @@ export default function PostCreator(props) {
     const redirectMain = () => history.push('/');
 
     useEffect(() => {
-        if (id) {
-            getPostByID(id).then(res => {
+        if (postID) {
+            getPostByID(postID).then(res => {
                 const post = res.data;
-                setCreator(post.creator);
                 setImageLink(post.imageLink);
                 setContent(post.content);
                 setJobList(post.jobList);
             })
         }
-    })
+    }, [postID])
 
     return (
         <div className='postcreator-container'>
-            <form className='post-form flexColumn' onSubmit={e => id ? edit(e) : post(e)}>
-                <h1 className='postcreator-header'>{id ? "SỬA BÀI" : "ĐĂNG BÀI MỚI"}</h1>
-                <label>
-                    <input
-                        className='post-input'
-                        name='creator'
-                        type='text'
-                        value={creator}
-                        placeholder='Người đăng bài'
-                        onChange={changeCreator}
-                        required />
-                </label>
+            <form className='post-form flexColumn' onSubmit={e => postID ? edit(e) : post(e)}>
+                <h1 className='postcreator-header'>{postID ? "SỬA BÀI" : "ĐĂNG BÀI MỚI"}</h1>
 
                 <label>
                     <input
@@ -101,15 +96,18 @@ export default function PostCreator(props) {
                             <option value={option} key={index.toString()}>{option}</option>
                         )}
                     </select>
-                    <ul>
+                    <ul className='post-joblist'>
                         {jobList.map((item, index) =>
-                            <li key={index.toString()}>{item}</li>
+                            <li key={index.toString()} className='post-chosen-job flexRow'>
+                                <button className="delete-job-btn" onClick={e => { e.preventDefault(); deleteJob(index) }}>X</button>
+                                {item}
+                            </li>
                         )}
                     </ul>
                 </label>
 
                 <div className='post-btns'>
-                    <input id='post-btn' type="submit" value={id ? "Lưu" : "Đăng bài"} />
+                    <input id='post-btn' type="submit" value={postID ? "Lưu" : "Đăng bài"} />
                     <button id='main-director' onClick={redirectMain}>Trở về</button>
                 </div>
             </form>
