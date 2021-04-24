@@ -68,18 +68,34 @@
 }
 
 .signup-submit {
-    width         : 80%;
-    font-size     : 1.2rem;
-    font-weight   : bold;
-    color         : white;
-    padding       : 1rem 0;
-    margin        : 2rem 0;
-    border        : none;
-    border-radius : 5px;
-    letter-spacing: 2px;
-    background    : linear-gradient(90deg, rgba(70, 127, 199, 1) 0%, rgba(76, 174, 212, 1) 35%, rgba(0, 212, 255, 1) 100%);
-    cursor        : pointer;
-    outline       : none;
+    width          : 80%;
+    font-size      : 1.2rem;
+    font-weight    : bold;
+    color          : white;
+    padding        : 1rem 0;
+    margin         : 2rem 0;
+    border         : none;
+    border-radius  : 5px;
+    letter-spacing : 2px;
+    background     : linear-gradient(135deg, rgba(70, 127, 199, 1) 0%, rgba(76, 174, 212, 1) 35%, rgba(0, 212, 255, 1) 100%);
+    background-size: 200% 200%;
+    cursor         : pointer;
+    outline        : none;
+    animation      : gradient 5s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 .signup-submit:hover,
