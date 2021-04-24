@@ -78,7 +78,7 @@
     border-radius  : 5px;
     letter-spacing : 2px;
     background     : linear-gradient(135deg, rgba(70, 127, 199, 1) 0%, rgba(76, 174, 212, 1) 35%, rgba(0, 212, 255, 1) 100%);
-    background-size: 200% 200%;
+    background-size: 300% 300%;
     cursor         : pointer;
     outline        : none;
     animation      : gradient 5s ease infinite;
