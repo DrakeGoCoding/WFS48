@@ -26,11 +26,7 @@ router.get('/user/:id', (req, res) => {
         return res.status(400).send({ error: 'request account id' })
 
     const id = { _id: req.params.id }
-
-    // return Post.findById(id).populate('creator').exec((err, post) => {
-    //     if (err) throw err;
-    //     res.json(post)
-    // })
+    
     return Post.find({ creator: id }).populate('creator').exec((err, posts) => {
         if (err) throw err;
         res.json(posts)
