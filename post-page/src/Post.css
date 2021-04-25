@@ -57,8 +57,13 @@
 }
 
 @media only screen and (max-width: 867px) {
-
     p {
         margin: 0.5rem 0;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .post-container {
+        padding: 1rem;
     }
 }

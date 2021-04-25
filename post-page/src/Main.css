@@ -50,3 +50,13 @@
         margin   : 0.5rem 0;
     }
 }
+
+@media only screen and (max-width: 425px){
+    .main-container{
+        width: 90%;
+    }
+
+    .main-greeting{
+        text-align: center;
+    }
+}

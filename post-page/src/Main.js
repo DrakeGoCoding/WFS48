@@ -61,7 +61,7 @@ export default function Main(props) {
     return (
         <div className='main-container'>
             <h1 className='main-header'>DANH SÁCH BÀI ĐĂNG</h1>
-            <h3>Hi, {userName}</h3>
+            <h3 class="main-greeting">Hi, {userName}</h3>
             <div className="main-btns">
                 <button id='post-director' onClick={redirectPostCreator}>Đăng bài</button>
                 <button id='logout-btn' onClick={redirectSignIn}>Đăng xuất</button>
