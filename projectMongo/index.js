@@ -24,6 +24,7 @@ const PostRouter = require('./postController')
 const UserRouter = require('./userController')
 
 const AuthRouter = require('./authController')
+const AccRouter = require('./accController')
 
 var mongoDB = 'mongodb://localhost:27017/projectMongo'
 
@@ -41,7 +42,7 @@ app.use('/student', middleware.authenticateJWT, StudentRouter)
 
 app.use('/post', middleware.authenticateJWT, PostRouter)
 app.use('/user', middleware.authenticateJWT, UserRouter)
-app.use('/', AuthRouter);
+app.use('/', AuthRouter, AccRouter);
 
 db.on('error', console.error.bind(console, 'MongoDB connection error: '))
 

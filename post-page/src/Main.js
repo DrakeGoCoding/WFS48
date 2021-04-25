@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { deletePostByID, getAllPosts } from './Axios';
+import jwt_decode from 'jwt-decode'
+import { deletePostByID, getAllPostsByUserID } from './Axios';
 
 import './Main.css'
 
@@ -13,7 +14,9 @@ export default function Main(props) {
 
     const fetchPosts = async () => {
         try {
-            const postList = await getAllPosts();
+            const token = localStorage.getItem('accessToken');
+            const userID = jwt_decode(token)._id;
+            const postList = await getAllPostsByUserID(userID);
             setPostList(postList.data)
         } catch (error) {
             setPostList([])

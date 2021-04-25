@@ -23,18 +23,18 @@ export default function Navigation() {
     useEffect(() => {
         let token = localStorage.getItem('accessToken')
         if (token) {
-            const userID = jwt_decode(token)._id
-            getUserByID(userID).then(res => {
-                const user = res.data;
-                setUserName(user.name)
-                setToken(token)
-            }).catch(error => {
+            try {
+                const userID = jwt_decode(token)._id
+                getUserByID(userID).then(res => {
+                    const user = res.data;
+                    setUserName(user.name)
+                    setToken(token)
+                })
+            } catch (error) {
                 setToken('')
-                console.log(error);
-            })
+            }
         }
-        else setToken('')
-    }, [])
+    }, [token])
 
     return (
         <Router>

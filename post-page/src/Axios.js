@@ -16,7 +16,7 @@ export const signIn = (body) => {
 }
 
 export const signUp = (body) => {
-    return instance.post('/user', body)
+    return instance.post('/signup', body)
 }
 
 export const getUserByID = (id) => {
@@ -25,6 +25,10 @@ export const getUserByID = (id) => {
 
 export const getAllPosts = () => {
     return instance.get('/post');
+}
+
+export const getAllPostsByUserID = (id) => {
+    return instance.get(`post/user/${id}`)
 }
 
 export const getPostByID = (id) => {
