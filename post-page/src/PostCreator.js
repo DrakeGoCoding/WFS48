@@ -12,14 +12,19 @@ export default function PostCreator() {
     const postID = param.id;
     const creatorID = jwt_decode(localStorage.getItem('accessToken'))._id;
 
+    const [status, setStatus] = useState('');
+    const statusOptions = {
+        0: 'Private',
+        1: 'Public'
+    }
     const [imageLink, setImageLink] = useState('');
     const [content, setContent] = useState('');
     const [jobList, setJobList] = useState([]);
-
     const jobOptions = [
         'Bác sỹ', 'Kỹ sư', 'Giảng viên', 'Diễn viên', 'Ca sỹ',
         'Người Mẫu', 'Đầu bếp', 'Nhiếp ảnh gia', 'Phóng viên', 'Chính trị gia'];
 
+    const changeStatus = e => setStatus(e.target.value);
     const changeImageLink = e => setImageLink(e.target.value);
     const changeContent = e => setContent(e.target.value);
     const addJob = e => {
@@ -35,14 +40,14 @@ export default function PostCreator() {
     }
     const post = e => {
         e.preventDefault();
-        const newPost = { creator: creatorID, imageLink, content, jobList };
+        const newPost = { creator: creatorID, status, imageLink, content, jobList };
         addNewPost(newPost).then(res => {
             redirectMain();
         });
     };
     const edit = e => {
         e.preventDefault();
-        const newPost = { id: postID, creator: creatorID, imageLink, content, jobList };
+        const newPost = { id: postID, creator: creatorID, status, imageLink, content, jobList };
         updatePost(newPost).then(res => {
             redirectMain();
         });
@@ -53,6 +58,7 @@ export default function PostCreator() {
         if (postID) {
             getPostByID(postID).then(res => {
                 const post = res.data;
+                setStatus(post.status)
                 setImageLink(post.imageLink);
                 setContent(post.content);
                 setJobList(post.jobList);
@@ -64,6 +70,18 @@ export default function PostCreator() {
         <div className='postcreator-container'>
             <form className='post-form flexColumn' onSubmit={e => postID ? edit(e) : post(e)}>
                 <h1 className='postcreator-header'>{postID ? "SỬA BÀI" : "ĐĂNG BÀI MỚI"}</h1>
+
+                <label>
+                    <select className='post-status'
+                        onChange={changeStatus}
+                        value={statusOptions[status]}
+                        required={status ? false : true}>
+                        <option value=''>Chọn trạng thái</option>
+                        {Object.keys(statusOptions).map(option => 
+                            <option value={option} key={option}>{statusOptions[option]}</option>
+                        )}
+                    </select>
+                </label>
 
                 <label>
                     <input

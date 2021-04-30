@@ -50,6 +50,7 @@ export default function Main(props) {
                 key={index.toString()}
                 index={index}
                 creator={item.creator.name}
+                status={item.status}
                 imageLink={item.imageLink}
                 content={item.content}
                 jobList={item.jobList}
@@ -61,7 +62,7 @@ export default function Main(props) {
     return (
         <div className='main-container'>
             <h1 className='main-header'>DANH SÁCH BÀI ĐĂNG</h1>
-            <h3 class="main-greeting">Hi, {userName}</h3>
+            <h3 className="main-greeting">Hi, {userName}</h3>
             <div className="main-btns">
                 <button id='post-director' onClick={redirectPostCreator}>Đăng bài</button>
                 <button id='logout-btn' onClick={redirectSignIn}>Đăng xuất</button>

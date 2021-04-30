@@ -43,7 +43,7 @@
     resize       : none;
 }
 
-.post-job {
+.post-job, .post-status {
     font-size    : 1.2rem;
     padding      : 1rem 1.5rem;
     margin       : 1rem 0;
@@ -93,7 +93,7 @@
         flex-direction: column;
     }
 
-    .post-job {
+    .post-job, .post-status {
         width    : 100%;
         font-size: 1rem;
     }

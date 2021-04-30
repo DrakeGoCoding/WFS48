@@ -9,6 +9,20 @@ router.get('/', (req, res) => {
     })
 })
 
+router.get('/public', (req, res) => {
+    return Post.find({status: 1}).populate('creator').exec((err, posts) => {
+        if (err) throw err
+        res.json(posts)
+    })
+})
+
+router.get('/private', (req, res) => {
+    return Post.find({ status: 0 }).populate('creator').exec((err, posts) => {
+        if (err) throw err
+        res.json(posts)
+    })
+})
+
 router.get('/:id', (req, res) => {
     if (!req.params.id)
         return res.status(400).send({ error: 'request post id' })
@@ -32,6 +46,19 @@ router.get('/user/:id', (req, res) => {
         res.json(posts)
     })
 })
+
+router.get('/user/:id/public', (req, res) => {
+    if (!req.params.id)
+        return res.status(400).send({ error: 'request account id' })
+
+    const id = { _id: req.params.id }
+
+    return Post.find({ creator: id, status: 1 }).populate('creator').exec((err, posts) => {
+        if (err) throw err;
+        res.json(posts)
+    })
+})
+
 
 router.post('/', (req, res) => {
     let post = new Post(req.body)

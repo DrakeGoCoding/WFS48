@@ -31,6 +31,18 @@ export const getAllPostsByUserID = (id) => {
     return instance.get(`post/user/${id}`)
 }
 
+export const getAllPublicPostsByUserID = (id) => {
+    return instance.get(`post/user/${id}/public`);
+}
+
+export const getAllPublicPosts = () => {
+    return instance.get('/post/public');
+}
+
+export const getAllPrivatePosts = () => {
+    return instance.get('/post/private');
+}
+
 export const getPostByID = (id) => {
     return instance.get('/post/' + id)
 }

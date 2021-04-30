@@ -7,6 +7,7 @@ import './Post.css'
 export default function Post(props) {
     const index = props.index;
     const creator = props.creator;
+    // const status = props.status;
     const content = props.content;
     const imageLink = props.imageLink;
     const jobList = props.jobList;

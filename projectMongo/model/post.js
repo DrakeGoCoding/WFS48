@@ -5,6 +5,7 @@ var postSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    status: Number,
     content: String,
     imageLink: String,
     jobList: Array
