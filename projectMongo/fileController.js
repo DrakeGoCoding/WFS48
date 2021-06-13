@@ -6,7 +6,7 @@ const File = require("./model/file");
 const router = express.Router();
 router.post("/upload", constants.upload.single("file"), (req, res) => {
 	let fileSave = new File({
-		path: req.file.originalname,
+		path: `./uploads/${req.file.originalname}`,
 	});
 	fileSave.save((err) => {
 		if (err) throw err;

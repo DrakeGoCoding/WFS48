@@ -30,7 +30,13 @@ const AccRouter = require("./accController");
 
 var mongoDB = "mongodb://localhost:27017/projectMongo";
 
-mongoose.connect(mongoDB, (err) => {
+mongoose.connect(mongoDB, {
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+	useFindAndModify: false,
+	useCreateIndex: true,
+	autoIndex: true
+}, (err) => {
 	if (err) throw err;
 	console.log("Successfully connected");
 });

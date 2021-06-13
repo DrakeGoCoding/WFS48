@@ -43,7 +43,7 @@ router.delete("/:id", (req, res) => {
 router.post("/avatar", constants.upload.single("file"), async (req, res) => {
 	let id = req.authenticateUser._id;
 	let update = req.body;
-	(update.avatar = req.file.originalname),
+	(update.avatar = `./uploads/${req.file.originalname}`),
 		User.findByIdAndUpdate(
 			id,
 			update,
